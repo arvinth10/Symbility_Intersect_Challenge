@@ -3,6 +3,12 @@ package signIn;
 import static org.junit.Assert.*;
 
 import java.util.concurrent.TimeUnit;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import signIn.TestSignInButtonVisible_1;; 
 
 /*
 2. As a User, I should have the ability to sign in to Amazon Test steps:
@@ -14,13 +20,9 @@ e) Tap Sign In Button
 f) Sign In w/ credentials
  */
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 
-public class TestSignInUser_2 extends TestSignInButtonVisible_1{
+
+public class TestSignInUser_2 extends Initialize{
   
   
   private String name = "Arvinth_SI"; 
@@ -30,7 +32,9 @@ public class TestSignInUser_2 extends TestSignInButtonVisible_1{
 
 
   @Test
-  public void testSigntoAccount() {
+  public void testSignToAccount() {
+    
+    TestSignInButtonVisible_1.testEnsureUserIsLoggedOut(); 
     accountSignIn.click();
     WebElement usernameEle = driver.findElement(By.id("ap_email")); 
     WebElement passwordEle = driver.findElement(By.id("ap_password"));
