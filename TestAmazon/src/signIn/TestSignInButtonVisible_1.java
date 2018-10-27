@@ -1,7 +1,12 @@
+package signIn;
 import static org.junit.Assert.*;
 
+import java.util.concurrent.TimeUnit;
+
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.chrome.*;
 import org.openqa.selenium.By;
@@ -16,40 +21,46 @@ b) Navigate to  https://www.amazon.ca
 c) Notice in top right corner, “Hello. Sign In. Your Account” should be displayed
  */
 
-public class TestSignInButton_1 {
+public class TestSignInButtonVisible_1 {
   
-  private static WebDriver driver;
-
+  protected static WebDriver driver;
+  protected static WebElement accountSignIn;
+  
+//
+//  @BeforeClass
+//  public static void setUpBeforeClass() throws Exception {
+//    System.setProperty("webdriver.chrome.driver", "chromedriver"); 
+//    driver  = new ChromeDriver(); 
+//  }
+  
   @Before
-  public void setUp() throws Exception {
+  public void setUp(){
     System.setProperty("webdriver.chrome.driver", "chromedriver"); 
     driver  = new ChromeDriver(); 
     driver.get ("https://www.amazon.ca/");
+    accountSignIn = driver.findElement(By.id("nav-link-yourAccount")); 
+    
   }
 
   @Test
   public void testSignInMessage() {
-    WebElement account = driver.findElement(By.id("nav-link-yourAccount")); 
-    WebElement navLine1 = account.findElement(By.className("nav-line-1"));
-    WebElement navLine2 = account.findElement(By.className("nav-line-2")); 
+    WebElement navLine1 = accountSignIn.findElement(By.className("nav-line-1"));
+    WebElement navLine2 = accountSignIn.findElement(By.className("nav-line-2")); 
     
-    
-   // navLine1.click();
+
     assertEquals("Test Hello. Sign in", "Hello. Sign in", navLine1.getText()); 
     assertEquals("Test Your Account", "Your Account", navLine2.getText()); 
   }
   
   @Test
-  public void testSignInButtonAppears(){
-    WebElement account = driver.findElement(By.id("nav-link-yourAccount")); 
-    WebElement navLine1 = account.findElement(By.className("nav-line-1"));
-    
-    Actions mouse = new Actions(driver); 
-    mouse.moveToElement(navLine1); 
-    
+  public void testSignInButtonAppears() throws InterruptedException{
     WebElement flyOutSignIn = driver.findElement(By.className("nav-signin-tt"));
-    
+
     assertEquals("Test Sign In Button Shown", true, flyOutSignIn.isDisplayed());
+
+//    TimeUnit.SECONDS.sleep(10);    
+//    
+//    assertEquals("Test Sign In Button Shown", false, flyOutSignIn.isDisplayed());
   }
   
   @After
