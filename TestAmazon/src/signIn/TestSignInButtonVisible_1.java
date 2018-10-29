@@ -1,8 +1,6 @@
 package signIn;
 import static org.junit.Assert.*;
-
 import java.util.concurrent.TimeUnit;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -26,22 +24,35 @@ public class TestSignInButtonVisible_1 extends Initialize {
 
   @Test
   public static void testEnsureUserIsLoggedOut() {
+    try{
+      
+    WebElement accountSignIn = driver.findElement(By.id("nav-link-yourAccount")); 
     WebElement navLine1 = accountSignIn.findElement(By.className("nav-line-1"));
     WebElement navLine2 = accountSignIn.findElement(By.className("nav-line-2")); 
 
     assertEquals("Test Hello. Sign in", "Hello. Sign in", navLine1.getText()); 
     assertEquals("Test Your Account", "Your Account", navLine2.getText()); 
+    
+    }catch (Exception e){
+      fail(e.toString()); 
+    }
   }
   
   @Test
-  public static void testSignInButtonAppears() throws InterruptedException{
+  public static void testSignInButtonAppears() {
+    try{
+      
     WebElement flyOutSignIn = driver.findElement(By.className("nav-signin-tt"));
 
     assertEquals("Test Sign In Button Shown", true, flyOutSignIn.isDisplayed());
 
     TimeUnit.SECONDS.sleep(10);    
     
-    assertEquals("Test Sign In Button Shown", false, flyOutSignIn.isDisplayed());
+    assertEquals("Test Sign In Button Disappears", false, flyOutSignIn.isDisplayed());
+    
+    }catch (Exception e){
+      fail(e.toString()); 
+    }
   }
  
 
