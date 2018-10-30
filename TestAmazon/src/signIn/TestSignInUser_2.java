@@ -15,45 +15,37 @@ import signIn.TestSignInButtonVisible_1;;
  */
 
 
-
 public class TestSignInUser_2 extends Initialize {
 
 
   private String name = "Arvinth_SI";
-  private String email = "testSI@gmail.com";
-  private String password = "SI_Challenge";
-
+  private String afterSignInURL = "https://www.amazon.ca/?ref_=nav_ya_signin&";
 
 
   @Test
+
+
   public void testSignToAccount() {
-    
-    TestSignInButtonVisible_1.testEnsureUserIsLoggedOut();
-    
-    try {
-      WebElement accountSignIn =
-          driver.findElement(By.id("nav-link-yourAccount"));
-      accountSignIn.click();
+    TestSignInButtonVisible_1 previousTest = new TestSignInButtonVisible_1();
+    previousTest.testAtHomePage();
+    previousTest.TestUserIsLoggedOutTopNav();
+    previousTest.TestUserIsLoggedOutBottomNav();
 
-      WebElement usernameEle = driver.findElement(By.id("ap_email"));
-      WebElement passwordEle = driver.findElement(By.id("ap_password"));
-      WebElement signInEle = driver.findElement(By.id("signInSubmit"));
+    WebElement accountSignIn =
+        driver.findElement(By.id("nav-link-yourAccount"));
+    accountSignIn.click();
 
-      usernameEle.sendKeys(email);
-      passwordEle.sendKeys(password);
+    loginHelper();
 
-      signInEle.click();
+    assertEquals("Test at home page after sign in", afterSignInURL,
+        driver.getCurrentUrl());
 
-      accountSignIn = driver.findElement(By.id("nav-link-yourAccount"));
-      WebElement navLine1 =
-          accountSignIn.findElement(By.className("nav-line-1"));
+    accountSignIn = driver.findElement(By.id("nav-link-yourAccount"));
+    WebElement navLine1 = accountSignIn.findElement(By.className("nav-line-1"));
 
-      assertEquals("Check sign in successful", "Hello, " + name,
-          navLine1.getText());
+    assertEquals("Check sign in successful", "Hello, " + name,
+        navLine1.getText());
 
-    } catch (Exception e) {
-      fail(e.toString());
-    }
   }
 
 }
